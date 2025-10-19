@@ -39,4 +39,3 @@ jobs:
     uses: ./.github/workflows/build.yaml
     with:
       path: ${{ matrix.path }}
-      manifest: ${{ needs.release-please.outputs.manifest }}
