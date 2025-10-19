@@ -1,0 +1,9 @@
+{
+    "packages": {
+      "flavor-adventure": {
+        "package-name": "flavor-adventure",
+        "release-type": "helm"
+      }
+    },
+    "separate-pull-requests": true
+  }

@@ -1,0 +1,142 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "workadventure.fullname" . }}-mapstorage
+  labels:
+    {{- include "workadventure.labels" . | nindent 4 }}
+    role: mapstorage
+spec:
+  replicas: {{ .Values.mapstorage.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "workadventure.selectorLabels" . | nindent 6 }}
+      role: mapstorage
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ (include (print $.Template.BasePath "/mapstorage-env.yaml") .) | sha256sum }}
+        checksum/secret: {{ (include (print $.Template.BasePath "/mapstorage-secret-env.yaml") .) | sha256sum }}
+        {{- if .Values.forceRedeploy }}
+        forceRedeploy: {{ randAlphaNum 10 | quote }}
+        {{- end }}
+        {{- with .Values.mapstorage.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "workadventure.selectorLabels" . | nindent 8 }}
+        role: mapstorage
+    spec:
+      {{- if or .Values.imageCredentials.enabled .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- if .Values.imageCredentials.enabled }}
+        - name: {{ include "workadventure.fullname" . }}-pull-secret
+        {{- end }}
+      {{- with .Values.imagePullSecrets }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: {{ include "workadventure.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.mapstorage.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: mapstorage
+          {{- if .Values.mapstorage.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "workadventure.fullname" . }}-mapstorage
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        {{- with .Values.mapstorage.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" . "context" $) | nindent 8 }}
+        {{- end }}
+      initContainers:
+        - name: mapstorage-init
+          image: busybox
+          securityContext:
+            {{- toYaml .Values.mapstorage.securityContext | nindent 12 }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              chown -R 1000:1000 /maps
+          volumeMounts:
+            - name: mapstorage
+              mountPath: /maps
+      containers:
+        - name: {{ .Chart.Name }}-mapstorage
+          securityContext:
+            {{- toYaml .Values.mapstorage.securityContext | nindent 12 }}
+          image: "{{ .Values.mapstorage.image.repository }}:{{ .Values.mapstorage.image.tag | default .Values.appVersion }}"
+          imagePullPolicy: {{ .Values.mapstorage.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "workadventure.fullname" . }}-env-mapstorage
+            - secretRef:
+                name: {{ include "workadventure.fullname" . }}-secret-env-mapstorage
+            {{- if .Values.mapstorage.externalConfigMapName }}
+            - configMapRef:
+                name: {{ .Values.mapstorage.externalConfigMapName }}
+            {{- end }}
+            {{- if .Values.mapstorage.externalSecretName }}
+            - secretRef:
+                name: {{ .Values.mapstorage.externalSecretName }}
+            {{- end }}
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "workadventure.fullname" . }}-secret-env-shared
+                  key: SECRET_KEY
+            - name: MAP_STORAGE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "workadventure.fullname" . }}-secret-env-shared
+                  key: MAP_STORAGE_API_TOKEN
+            {{- if .Values.mapstorage.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.mapstorage.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.mapstorage.service.port }}
+              protocol: TCP
+            - name: grpc
+              containerPort: 50053
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          volumeMounts:
+            - name: mapstorage
+              mountPath: /maps
+            {{- with .Values.mapstorage.extraVolumeMounts }}
+            {{- include "common.tplvalues.render" (dict "value" . "context" $) | nindent 12 }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.mapstorage.resources | nindent 12 }}
+          # lifecycle:
+          #   postStart:
+          #     exec:
+          #       command:
+          #         - sh
+          #         - -c
+          #         - |
+          #           chown -R node:node /maps
+
+      {{- with .Values.mapstorage.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mapstorage.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mapstorage.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

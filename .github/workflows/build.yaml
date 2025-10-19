@@ -1,0 +1,85 @@
+name: Build
+
+"on":
+  workflow_call:
+    inputs:
+      path:
+        description: Path to chart directory
+        required: true
+        type: string
+      manifest:
+        description: Output from release-please
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      path:
+        description: Path to chart directory
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.PAT }}
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'latest'
+
+      - name: Lint Helm Chart
+        run: helm lint .
+        working-directory: ${{ inputs.path }}
+
+      - name: Package Helm Chart
+        run: |
+          helm package .
+          ls -la *.tgz
+        working-directory: ${{ inputs.path }}
+
+      - name: Upload Chart to Release
+        if: github.event_name == 'workflow_call'
+        uses: shogo82148/actions-upload-release-asset@v1.7.2
+        with:
+          github_token: ${{ secrets.PAT }}
+          upload_url: ${{ fromJSON(inputs.manifest)[format('{0}--upload_url', inputs.path)] }}
+          asset_path: ./${{ inputs.path }}/*.tgz
+          asset_content_type: application/gzip
+          overwrite: true
+
+      - name: Login to GitHub Container Registry
+        if: github.event_name == 'workflow_call'
+        run: |
+          echo ${{ secrets.PAT }} | helm registry login ghcr.io --username ${{ github.actor }} --password-stdin
+
+      - name: Publish to GitHub Packages
+        if: github.event_name == 'workflow_call'
+        run: |
+          CHART_NAME=$(helm show chart . | grep '^name:' | awk '{print $2}')
+          helm push *.tgz oci://ghcr.io/${{ github.repository_owner }}
+        working-directory: ${{ inputs.path }}
+
+      - name: Publish to GitHub Pages
+        if: github.event_name == 'workflow_call'
+        run: |
+          git config user.name "leafdbot[bot]"
+          git config user.email "192038741+leafdbot[bot]@users.noreply.github.com"
+          
+          git fetch origin gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages || git checkout --orphan gh-pages
+          
+          cp ${{ inputs.path }}/*.tgz .
+          
+          helm repo index . --url https://github.com/${{ github.repository }}/releases/download/${{ fromJSON(inputs.manifest)[format('{0}--tag_name', inputs.path)] }}
+          
+          git add *.tgz index.yaml
+          git commit -m "Release ${{ fromJSON(inputs.manifest)[format('{0}--tag_name', inputs.path)] }}" || true
+          git push origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
