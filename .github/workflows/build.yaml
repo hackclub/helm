@@ -7,10 +7,6 @@ name: Build
         description: Path to chart directory
         required: true
         type: string
-      manifest:
-        description: Output from release-please
-        required: false
-        type: string
   workflow_dispatch:
     inputs:
       path:
@@ -21,12 +17,14 @@ name: Build
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          token: ${{ secrets.PAT }}
 
       - name: Install Helm
         uses: azure/setup-helm@v4
@@ -52,33 +50,38 @@ jobs:
           ls -la *.tgz
         working-directory: ${{ inputs.path }}
 
-      - name: Login to GitHub Container Registry
-        if: github.event_name == 'workflow_call' && inputs.manifest != ''
-        run: |
-          echo ${{ secrets.PAT }} | helm registry login ghcr.io --username ${{ github.actor }} --password-stdin
-
-      - name: Publish to GitHub Packages
-        if: github.event_name == 'workflow_call' && inputs.manifest != ''
+      - name: Extract Chart Info
+        id: chart_info
         run: |
           CHART_NAME=$(helm show chart . | grep '^name:' | awk '{print $2}')
-          helm push *.tgz oci://ghcr.io/${{ github.repository_owner }}
+          CHART_VERSION=$(helm show chart . | grep '^version:' | awk '{print $2}')
+          echo "name=${CHART_NAME}" >> $GITHUB_OUTPUT
+          echo "version=${CHART_VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${CHART_NAME}-${CHART_VERSION}" >> $GITHUB_OUTPUT
+        working-directory: ${{ inputs.path }}
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo ${{ github.token }} | helm registry login ghcr.io --username ${{ github.actor }} --password-stdin
+
+      - name: Publish to OCI Registry 
+        run: |
+          helm push *.tgz oci://ghcr.io/hackclub
         working-directory: ${{ inputs.path }}
 
       - name: Prepare Helm Repository Index
-        if: github.event_name == 'workflow_call' && inputs.manifest != ''
         run: |
           mkdir -p helm-repo
           cp ${{ inputs.path }}/*.tgz helm-repo/
-          helm repo index helm-repo/ --url https://github.com/${{ github.repository }}/releases/download/${{ fromJSON(inputs.manifest)[format('{0}--tag_name', inputs.path)] }}
+          helm repo index helm-repo/ --url https://helm.hackclub.leafd.dev
 
       - name: Upload Helm Repository to R2
-        if: github.event_name == 'workflow_call' && inputs.manifest != ''
         uses: ryand56/r2-upload-action@latest
         with:
           r2-account-id: '${{ secrets.CLOUDFLARE_ACCOUNT_ID }}'
           r2-access-key-id: '${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}'
           r2-secret-access-key: '${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}'
-          r2-bucket: launcherbinaries
+          r2-bucket: helm
           source-dir: helm-repo
           destination-dir: ./
           keep-file-fresh: true
