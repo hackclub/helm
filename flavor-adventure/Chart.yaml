@@ -1,6 +1,6 @@
 apiVersion: v2
-name: workadventure
-description: Run workadventure on Kubernetes
+name: flavor-adventure
+description: Run flavor-adventure on Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
