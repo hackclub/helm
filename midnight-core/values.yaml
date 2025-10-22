@@ -94,7 +94,6 @@ userService:
     PORT: "3002"
     USER_SERVICE_PORT: "3002"
     USER_SERVICE_NODE_ENV: "production"
-    CORS_ORIGIN: "http://localhost:5173,http://localhost:3000"
 
   secretEnv:
     USER_SERVICE_AIRTABLE_API_KEY: ""
@@ -140,7 +139,6 @@ mailService:
   env:
     NODE_ENV: "production"
     MAIL_SERVICE_PORT: "3003"
-    MAIL_SERVICE_CORS_ORIGIN: "http://localhost:3000"
     AWS_REGION: "us-east-1"
     SMTP_HOST: "email-smtp.us-east-1.amazonaws.com"
     SMTP_PORT: "587"
