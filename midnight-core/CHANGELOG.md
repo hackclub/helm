@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/hackclub/helm/compare/midnight-core-v1.0.2...midnight-core-v1.0.3) (2025-10-22)
+
+
+### Bug Fixes
+
+* (midnight): update traefik crd ([29b7642](https://github.com/hackclub/helm/commit/29b7642bc8729b32924edc1a8bb04f06be92da26))
+
 ## [1.0.2](https://github.com/hackclub/helm/compare/midnight-core-v1.0.1...midnight-core-v1.0.2) (2025-10-22)
 
 
