@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "midnight-core.fullname" . }}-env-lark-ui
+  labels:
+    {{- include "midnight-core.labels" . | nindent 4 }}
+    role: lark-ui
+data:
+  {{- range $key, $value := .Values.larkUi.env }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  PUBLIC_API_URL: "https://{{ .Values.domainName }}"
+  VITE_API_URL: "https://{{ .Values.domainName }}/api/user"

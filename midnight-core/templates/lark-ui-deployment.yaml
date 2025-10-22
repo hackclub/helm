@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "midnight-core.fullname" . }}-lark-ui
+  labels:
+    {{- include "midnight-core.labels" . | nindent 4 }}
+    role: lark-ui
+spec:
+  replicas: {{ .Values.larkUi.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "midnight-core.selectorLabels" . | nindent 6 }}
+      role: lark-ui
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ (include (print $.Template.BasePath "/lark-ui-env.yaml") .) | sha256sum }}
+        {{- if .Values.forceRedeploy }}
+        forceRedeploy: {{ randAlphaNum 10 | quote }}
+        {{- end }}
+        {{- with .Values.larkUi.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "midnight-core.selectorLabels" . | nindent 8 }}
+        role: lark-ui
+    spec:
+      {{- if or .Values.imageCredentials.enabled .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- if .Values.imageCredentials.enabled }}
+        - name: {{ include "midnight-core.fullname" . }}-pull-secret
+        {{- end }}
+        {{- with .Values.imagePullSecrets }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+      serviceAccountName: {{ include "midnight-core.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.larkUi.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-lark-ui
+          securityContext:
+            {{- toYaml .Values.larkUi.securityContext | nindent 12 }}
+          image: "{{ .Values.larkUi.image.repository }}:{{ .Values.larkUi.image.tag | default .Values.appVersion }}"
+          imagePullPolicy: {{ .Values.larkUi.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "midnight-core.fullname" . }}-env-lark-ui
+            {{- if .Values.larkUi.externalConfigMapName }}
+            - configMapRef:
+                name: {{ .Values.larkUi.externalConfigMapName }}
+            {{- end }}
+            {{- if .Values.larkUi.externalSecretName }}
+            - secretRef:
+                name: {{ .Values.larkUi.externalSecretName }}
+            {{- end }}
+          {{- if .Values.larkUi.extraEnvVars }}
+          env:
+            {{- include "common.tplvalues.render" (dict "value" .Values.larkUi.extraEnvVars "context" $) | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.larkUi.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.larkUi.resources | nindent 12 }}
+      {{- with .Values.larkUi.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.larkUi.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.larkUi.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -3,6 +3,10 @@
       "flavor-adventure": {
         "package-name": "flavor-adventure",
         "release-type": "helm"
+      },
+      "midnight-core": {
+        "package-name": "midnight-core",
+        "release-type": "helm"
       }
     },
     "separate-pull-requests": true

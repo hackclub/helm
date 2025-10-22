@@ -1,0 +1,223 @@
+appVersion: "3.8"
+domainName: midnight.example.com
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
+
+imagePullSecrets: []
+
+imageCredentials:
+  enabled: false
+  registry: ""
+  username: ""
+  password: ""
+  email: ""
+
+forceRedeploy: false
+
+# #########################################################
+# lark-ui service (Frontend UI - SvelteKit Application)
+# #########################################################
+larkUi:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/hackclub/midnight/lark-ui
+    pullPolicy: IfNotPresent
+    tag: "latest"
+
+  podAnnotations: {}
+
+  podSecurityContext: {}
+
+  securityContext: {}
+
+  service:
+    type: ClusterIP
+    port: 5173
+
+  resources: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  env:
+    NODE_ENV: "production"
+    PORT: "5173"
+
+  secretEnv: {}
+
+  extraEnvVars: []
+
+  externalConfigMapName: ""
+  externalSecretName: ""
+
+# #########################################################
+# user-service (User Service - NestJS API)
+# #########################################################
+userService:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/hackclub/midnight/user-service
+    pullPolicy: IfNotPresent
+    tag: "latest"
+
+  podAnnotations: {}
+
+  podSecurityContext: {}
+
+  securityContext: {}
+
+  service:
+    type: ClusterIP
+    port: 3002
+
+  resources: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  env:
+    NODE_ENV: "production"
+    PORT: "3002"
+    USER_SERVICE_PORT: "3002"
+    USER_SERVICE_NODE_ENV: "production"
+    CORS_ORIGIN: "http://localhost:5173,http://localhost:3000"
+
+  secretEnv:
+    USER_SERVICE_AIRTABLE_API_KEY: ""
+    DATABASE_URL: ""
+    REDIS_HOST: ""
+    REDIS_PORT: ""
+    REDIS_PASSWORD: ""
+    REDIS_DB: ""
+    ADMIN_EMAIL_WHITELIST: ""
+
+  extraEnvVars: []
+
+  externalConfigMapName: ""
+  externalSecretName: ""
+
+# #########################################################
+# mail-service (Mail Service - NestJS API)
+# #########################################################
+mailService:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/hackclub/midnight/mail-service
+    pullPolicy: IfNotPresent
+    tag: "latest"
+
+  podAnnotations: {}
+
+  podSecurityContext: {}
+
+  securityContext: {}
+
+  service:
+    type: ClusterIP
+    port: 3003
+
+  resources: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  env:
+    NODE_ENV: "production"
+    MAIL_SERVICE_PORT: "3003"
+    MAIL_SERVICE_CORS_ORIGIN: "http://localhost:3000"
+    AWS_REGION: "us-east-1"
+    SMTP_HOST: "email-smtp.us-east-1.amazonaws.com"
+    SMTP_PORT: "587"
+
+  secretEnv:
+    MAIL_SERVICE_DATABASE_URL: ""
+    SMTP_USER: ""
+    SMTP_PASS: ""
+    EMAIL_FROM: ""
+    SMIME_PRIVATE_KEY_PATH: ""
+    SMIME_CERT_PATH: ""
+    SMIME_CHAIN_PATH: ""
+
+  extraEnvVars: []
+
+  externalConfigMapName: ""
+  externalSecretName: ""
+
+
+# #########################################################
+# ingress configuration
+# #########################################################
+ingress:
+  enabled: true
+  className: "traefik"
+  tls: false
+  secretName: ""
+  pathType: ImplementationSpecific
+
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: default-gateway-middleware@kubernetescrd
+
+  # Gateway middleware for routing
+  gatewayMiddleware:
+    enabled: true
+
+# #########################################################
+# PostgreSQL configuration
+# #########################################################
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: ""
+    database: "midnight_db"
+    username: "midnight_user"
+    password: ""
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+
+# #########################################################
+# Redis configuration
+# #########################################################
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: 1Gi
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"

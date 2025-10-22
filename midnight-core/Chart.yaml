@@ -1,0 +1,17 @@
+apiVersion: v2
+name: midnight-core
+description: Run midnight-core on Kubernetes
+
+type: application
+
+version: 3.8.0
+
+appVersion: "3.8"
+
+dependencies:
+  - name: postgresql
+    version: 12.x.x
+    repository: https://charts.bitnami.com/bitnami
+  - name: redis
+    version: 17.x.x
+    repository: https://charts.bitnami.com/bitnami

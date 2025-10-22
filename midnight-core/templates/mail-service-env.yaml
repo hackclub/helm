@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "midnight-core.fullname" . }}-env-mail-service
+  labels:
+    {{- include "midnight-core.labels" . | nindent 4 }}
+    role: mail-service
+data:
+  {{- range $key, $value := .Values.mailService.env }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  MAIL_SERVICE_CORS_ORIGIN: "https://{{ .Values.domainName }}"

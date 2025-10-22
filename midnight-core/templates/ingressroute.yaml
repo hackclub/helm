@@ -1,0 +1,29 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "midnight-core.fullname" . }}-ingressroute
+  labels:
+    {{- include "midnight-core.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`{{ .Values.domainName }}`) && PathPrefix(`/api/user`)
+      kind: Rule
+      services:
+        - name: {{ include "midnight-core.fullname" . }}-user-service
+          port: {{ .Values.userService.service.port }}
+      middlewares:
+        - name: strip-prefix-api-user
+    - match: Host(`{{ .Values.domainName }}`)
+      kind: Rule
+      services:
+        - name: {{ include "midnight-core.fullname" . }}-lark-ui
+          port: {{ .Values.larkUi.service.port }}
+  middlewares:
+    - name: strip-prefix-api-user
+      stripPrefix:
+        prefixes:
+          - /api/user
+{{- end }}
