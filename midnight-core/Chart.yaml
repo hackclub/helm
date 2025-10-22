@@ -15,3 +15,7 @@ dependencies:
   - name: redis
     version: 17.x.x
     repository: https://charts.bitnami.com/bitnami
+  - name: traefik
+    version: 26.x.x
+    repository: https://helm.traefik.io/traefik
+    condition: traefik.enabled

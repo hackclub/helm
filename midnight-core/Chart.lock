@@ -5,5 +5,8 @@ dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 17.17.1
-digest: sha256:129089ec531b13eb36725950dd6d3f9c5b231cba3474400ca03ce016130f5db1
-generated: "2025-10-22T12:54:48.328039-04:00"
+- name: traefik
+  repository: https://helm.traefik.io/traefik
+  version: 26.1.0
+digest: sha256:6a5e52ce4826bb72e44e389b988fe884cfd02091dab6d9fe7457bbe487e84384
+generated: "2025-10-22T16:25:31.220493-04:00"
