@@ -34,6 +34,7 @@ jobs:
       - name: Add Helm Repositories
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add traefik https://helm.traefik.io/traefik
           helm repo update
 
       - name: Build Chart Dependencies
