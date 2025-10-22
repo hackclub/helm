@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/hackclub/helm/compare/midnight-core-v1.0.3...midnight-core-v1.0.4) (2025-10-22)
+
+
+### Bug Fixes
+
+* **midnight:** eliminate repo for traefik ([9b5418a](https://github.com/hackclub/helm/commit/9b5418a959c9e2b2e0f832eac90368b4b6fbad2b))
+
 ## [1.0.3](https://github.com/hackclub/helm/compare/midnight-core-v1.0.2...midnight-core-v1.0.3) (2025-10-22)
 
 
