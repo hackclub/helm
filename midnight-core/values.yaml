@@ -98,8 +98,6 @@ userService:
 
   secretEnv:
     USER_SERVICE_AIRTABLE_API_KEY: ""
-    DATABASE_URL: ""
-    REDIS_HOST: ""
     REDIS_PORT: ""
     REDIS_PASSWORD: ""
     REDIS_DB: ""
@@ -148,7 +146,6 @@ mailService:
     SMTP_PORT: "587"
 
   secretEnv:
-    MAIL_SERVICE_DATABASE_URL: ""
     SMTP_USER: ""
     SMTP_PASS: ""
     EMAIL_FROM: ""
