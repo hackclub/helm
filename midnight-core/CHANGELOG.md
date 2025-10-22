@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/hackclub/helm/compare/midnight-core-v1.0.0...midnight-core-v1.0.1) (2025-10-22)
+
+
+### Bug Fixes
+
+* **midnight:** remove duplicate fields ([cb20ff2](https://github.com/hackclub/helm/commit/cb20ff229c882f3ad17e1af2465e0f1f288f7cf8))
+
 ## 1.0.0 (2025-10-22)
 
 
