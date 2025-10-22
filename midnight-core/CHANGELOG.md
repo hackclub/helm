@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/hackclub/helm/compare/midnight-core-v1.0.4...midnight-core-v1.0.5) (2025-10-22)
+
+
+### Bug Fixes
+
+* **midnight:** enable ssl ([b991b9e](https://github.com/hackclub/helm/commit/b991b9ef18a2387c4be240eddba3836465468dd3))
+
 ## [1.0.4](https://github.com/hackclub/helm/compare/midnight-core-v1.0.3...midnight-core-v1.0.4) (2025-10-22)
 
 
