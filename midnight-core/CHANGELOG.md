@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.8](https://github.com/hackclub/helm/compare/midnight-core-v1.1.7...midnight-core-v1.1.8) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** separate user service ([c38749b](https://github.com/hackclub/helm/commit/c38749b523dac6a0a8592a0ef3d38faee83a694c))
+
 ## [1.1.7](https://github.com/hackclub/helm/compare/midnight-core-v1.1.6...midnight-core-v1.1.7) (2025-10-23)
 
 
