@@ -65,14 +65,6 @@ spec:
             - name: http
               containerPort: {{ .Values.mailService.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: http
           resources:
             {{- toYaml .Values.mailService.resources | nindent 12 }}
       {{- with .Values.mailService.nodeSelector }}

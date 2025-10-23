@@ -65,14 +65,6 @@ spec:
             - name: http
               containerPort: {{ .Values.userService.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: http
           resources:
             {{- toYaml .Values.userService.resources | nindent 12 }}
       {{- with .Values.userService.nodeSelector }}
