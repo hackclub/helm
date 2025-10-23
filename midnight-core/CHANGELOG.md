@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/hackclub/helm/compare/midnight-core-v1.0.5...midnight-core-v1.1.0) (2025-10-23)
+
+
+### Features
+
+* fix env variables for dbs ([e5f7d3f](https://github.com/hackclub/helm/commit/e5f7d3f8d714b73351a51c511d1af0f4db5e3004))
+
 ## [1.0.5](https://github.com/hackclub/helm/compare/midnight-core-v1.0.4...midnight-core-v1.0.5) (2025-10-22)
 
 
