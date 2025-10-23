@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/hackclub/helm/compare/midnight-core-v1.1.1...midnight-core-v1.1.2) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** disable redis ([be78cad](https://github.com/hackclub/helm/commit/be78cad784b94af3cbbfad82bd18c9bf7998d845))
+
 ## [1.1.1](https://github.com/hackclub/helm/compare/midnight-core-v1.1.0...midnight-core-v1.1.1) (2025-10-23)
 
 
