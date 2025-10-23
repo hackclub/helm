@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.10](https://github.com/hackclub/helm/compare/midnight-core-v1.1.9...midnight-core-v1.1.10) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** change redis port ([6ada2ce](https://github.com/hackclub/helm/commit/6ada2ce95d606d274cdd8602bdfd9f5a0eab1b35))
+
 ## [1.1.9](https://github.com/hackclub/helm/compare/midnight-core-v1.1.8...midnight-core-v1.1.9) (2025-10-23)
 
 
