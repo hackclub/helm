@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/hackclub/helm/compare/midnight-core-v1.1.3...midnight-core-v1.1.4) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** set default db values ([b1caf58](https://github.com/hackclub/helm/commit/b1caf58b52216e43f429288bdc5e5d725da6b5c1))
+
 ## [1.1.3](https://github.com/hackclub/helm/compare/midnight-core-v1.1.2...midnight-core-v1.1.3) (2025-10-23)
 
 
