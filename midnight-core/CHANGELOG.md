@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/hackclub/helm/compare/midnight-core-v1.1.4...midnight-core-v1.1.5) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** eliminate redis deployment ([6b73ee7](https://github.com/hackclub/helm/commit/6b73ee72d4be5a688dc1520686b4d5f58b1bcfc1))
+
 ## [1.1.4](https://github.com/hackclub/helm/compare/midnight-core-v1.1.3...midnight-core-v1.1.4) (2025-10-23)
 
 
