@@ -23,6 +23,13 @@ spec:
     - host: {{ .Values.domainName }}
       http:
         paths:
+          - path: /api/user
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "midnight-core.fullname" . }}-user-service
+                port:
+                  number: {{ .Values.userService.service.port }}
           - path: /
             pathType: Prefix
             backend:
