@@ -9,6 +9,7 @@ metadata:
     {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
+    traefik.ingress.kubernetes.io/router.middlewares: {{ include "midnight-core.fullname" . }}-strip-prefix@kubernetescrd
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
