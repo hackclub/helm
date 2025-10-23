@@ -28,7 +28,7 @@ spec:
             pathType: {{ .Values.ingress.pathType }}
             backend:
               service:
-                name: {{ include "workadventure.fullname" . }}-back
+                name: {{ include "workadventure.fullname" . }}-back-0
                 port:
                   number: {{ .Values.back.service.port }}
           - path: /uploader{{ .Values.ingress.rewritePathSuffix }}
