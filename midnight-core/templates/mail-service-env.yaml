@@ -10,6 +10,6 @@ data:
   {{ $key }}: {{ $value | quote }}
   {{- end }}
   REDIS_HOST: "redis-ha.redis.svc.cluster.local"
-  REDIS_PORT: "6379"
+  REDIS_PORT: "26379"
   REDIS_DB: "0"
   MAIL_SERVICE_CORS_ORIGIN: "https://{{ .Values.domainName }}"

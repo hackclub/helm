@@ -52,7 +52,7 @@ larkUi:
   env:
     NODE_ENV: "production"
     PORT: "5173"
-    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
+    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:26379"
 
   secretEnv:
     DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
@@ -99,7 +99,7 @@ userService:
     PORT: "3002"
     USER_SERVICE_PORT: "3002"
     USER_SERVICE_NODE_ENV: "production"
-    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
+    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:26379"
 
   secretEnv:
     USER_SERVICE_AIRTABLE_API_KEY: ""
@@ -147,7 +147,7 @@ mailService:
     AWS_REGION: "us-east-1"
     SMTP_HOST: "email-smtp.us-east-1.amazonaws.com"
     SMTP_PORT: "587"
-    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
+    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:26379"
 
   secretEnv:
     MAIL_SERVICE_DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
