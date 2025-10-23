@@ -55,7 +55,7 @@ larkUi:
     REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
 
   secretEnv:
-    DATABASE_URL: ""
+    DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
     USER_SERVICE_AIRTABLE_API_KEY: ""
     TUNNEL_TOKEN: ""
     REDIS_PASSWORD: "midnight"
@@ -103,7 +103,7 @@ userService:
 
   secretEnv:
     USER_SERVICE_AIRTABLE_API_KEY: ""
-    DATABASE_URL: ""
+    DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
     ADMIN_EMAIL_WHITELIST: ""
     REDIS_PASSWORD: "midnight"
 
@@ -150,7 +150,7 @@ mailService:
     REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
 
   secretEnv:
-    MAIL_SERVICE_DATABASE_URL: ""
+    MAIL_SERVICE_DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
     SMTP_USER: ""
     SMTP_PASS: ""
     EMAIL_FROM: ""
