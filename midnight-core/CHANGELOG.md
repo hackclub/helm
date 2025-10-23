@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/hackclub/helm/compare/midnight-core-v1.1.0...midnight-core-v1.1.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** solve duplicate env errors ([8f19bc7](https://github.com/hackclub/helm/commit/8f19bc795738f9acff340f9cba55981e7a5ec8a8))
+
 ## [1.1.0](https://github.com/hackclub/helm/compare/midnight-core-v1.0.5...midnight-core-v1.1.0) (2025-10-23)
 
 
