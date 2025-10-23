@@ -15,6 +15,7 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ (include (print $.Template.BasePath "/lark-ui-env.yaml") .) | sha256sum }}
+        checksum/secret: {{ (include (print $.Template.BasePath "/lark-ui-secret-env.yaml") .) | sha256sum }}
         {{- if .Values.forceRedeploy }}
         forceRedeploy: {{ randAlphaNum 10 | quote }}
         {{- end }}
@@ -46,6 +47,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "midnight-core.fullname" . }}-env-lark-ui
+            - secretRef:
+                name: {{ include "midnight-core.fullname" . }}-secret-env-lark-ui
             {{- if .Values.larkUi.externalConfigMapName }}
             - configMapRef:
                 name: {{ .Values.larkUi.externalConfigMapName }}

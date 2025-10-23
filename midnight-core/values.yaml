@@ -52,8 +52,12 @@ larkUi:
   env:
     NODE_ENV: "production"
     PORT: "5173"
+    REDIS_URL: "redis://redis-ha.redis.svc.cluster.local:6379"
 
-  secretEnv: {}
+  secretEnv:
+    DATABASE_URL: ""
+    USER_SERVICE_AIRTABLE_API_KEY: ""
+    TUNNEL_TOKEN: ""
 
   extraEnvVars: []
 
@@ -94,12 +98,11 @@ userService:
     PORT: "3002"
     USER_SERVICE_PORT: "3002"
     USER_SERVICE_NODE_ENV: "production"
+    REDIS_URL: "redis://redis-ha.redis.svc.cluster.local:6379"
 
   secretEnv:
     USER_SERVICE_AIRTABLE_API_KEY: ""
-    REDIS_PORT: ""
-    REDIS_PASSWORD: ""
-    REDIS_DB: ""
+    DATABASE_URL: ""
     ADMIN_EMAIL_WHITELIST: ""
 
   extraEnvVars: []
@@ -142,8 +145,10 @@ mailService:
     AWS_REGION: "us-east-1"
     SMTP_HOST: "email-smtp.us-east-1.amazonaws.com"
     SMTP_PORT: "587"
+    REDIS_URL: "redis://redis-ha.redis.svc.cluster.local:6379"
 
   secretEnv:
+    MAIL_SERVICE_DATABASE_URL: ""
     SMTP_USER: ""
     SMTP_PASS: ""
     EMAIL_FROM: ""
@@ -180,43 +185,13 @@ ingress:
 # PostgreSQL configuration
 # #########################################################
 postgresql:
-  enabled: true
-  auth:
-    postgresPassword: ""
-    database: "midnight_db"
-    username: "midnight_user"
-    password: ""
-  primary:
-    persistence:
-      enabled: true
-      size: 8Gi
-    resources:
-      requests:
-        memory: "256Mi"
-        cpu: "250m"
-      limits:
-        memory: "512Mi"
-        cpu: "500m"
+  enabled: false
 
 # #########################################################
 # Redis configuration
 # #########################################################
 redis:
-  enabled: true
-  architecture: standalone
-  auth:
-    enabled: false
-  master:
-    persistence:
-      enabled: true
-      size: 1Gi
-    resources:
-      requests:
-        memory: "128Mi"
-        cpu: "100m"
-      limits:
-        memory: "256Mi"
-        cpu: "200m"
+  enabled: false
 
 # #########################################################
 # Traefik configuration
