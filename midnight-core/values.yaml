@@ -52,12 +52,13 @@ larkUi:
   env:
     NODE_ENV: "production"
     PORT: "5173"
-    REDIS_URL: "redis://redis-ha.redis.svc.cluster.local:6379"
+    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
 
   secretEnv:
     DATABASE_URL: ""
     USER_SERVICE_AIRTABLE_API_KEY: ""
     TUNNEL_TOKEN: ""
+    REDIS_PASSWORD: "midnight"
 
   extraEnvVars: []
 
@@ -98,12 +99,13 @@ userService:
     PORT: "3002"
     USER_SERVICE_PORT: "3002"
     USER_SERVICE_NODE_ENV: "production"
-    REDIS_URL: "redis://redis-ha.redis.svc.cluster.local:6379"
+    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
 
   secretEnv:
     USER_SERVICE_AIRTABLE_API_KEY: ""
     DATABASE_URL: ""
     ADMIN_EMAIL_WHITELIST: ""
+    REDIS_PASSWORD: "midnight"
 
   extraEnvVars: []
 
@@ -145,7 +147,7 @@ mailService:
     AWS_REGION: "us-east-1"
     SMTP_HOST: "email-smtp.us-east-1.amazonaws.com"
     SMTP_PORT: "587"
-    REDIS_URL: "redis://redis-ha.redis.svc.cluster.local:6379"
+    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:6379"
 
   secretEnv:
     MAIL_SERVICE_DATABASE_URL: ""
@@ -155,6 +157,7 @@ mailService:
     SMIME_PRIVATE_KEY_PATH: ""
     SMIME_CERT_PATH: ""
     SMIME_CHAIN_PATH: ""
+    REDIS_PASSWORD: "midnight"
 
   extraEnvVars: []
 
