@@ -9,5 +9,8 @@ data:
   {{- range $key, $value := .Values.userService.env }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
+  REDIS_HOST: "redis-ha.redis.svc.cluster.local"
+  REDIS_PORT: "6379"
+  REDIS_DB: "0"
   MAIL_SERVICE_URL: "http://{{ include "midnight-core.fullname" . }}-mail-service:{{ .Values.mailService.service.port }}"
   CORS_ORIGIN: "https://{{ .Values.domainName }}"

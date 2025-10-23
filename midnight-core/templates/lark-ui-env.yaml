@@ -9,5 +9,8 @@ data:
   {{- range $key, $value := .Values.larkUi.env }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
+  REDIS_HOST: "redis-ha.redis.svc.cluster.local"
+  REDIS_PORT: "6379"
+  REDIS_DB: "0"
   PUBLIC_API_URL: "https://{{ .Values.domainName }}"
   VITE_API_URL: "https://{{ .Values.domainName }}/api/user"
