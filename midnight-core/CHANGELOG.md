@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/hackclub/helm/compare/midnight-core-v1.1.6...midnight-core-v1.1.7) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** change service paths ([27b4794](https://github.com/hackclub/helm/commit/27b479424dedff79e8c32a29a22ab060c4440b57))
+
 ## [1.1.6](https://github.com/hackclub/helm/compare/midnight-core-v1.1.5...midnight-core-v1.1.6) (2025-10-23)
 
 
