@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/hackclub/helm/compare/midnight-core-v1.1.5...midnight-core-v1.1.6) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** remove middleware ([a24323e](https://github.com/hackclub/helm/commit/a24323ebd679902f4eb6d7fbc6c1da166a9b5521))
+
 ## [1.1.5](https://github.com/hackclub/helm/compare/midnight-core-v1.1.4...midnight-core-v1.1.5) (2025-10-23)
 
 
