@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.9](https://github.com/hackclub/helm/compare/midnight-core-v1.1.8...midnight-core-v1.1.9) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** change ingress config ([80b0b1b](https://github.com/hackclub/helm/commit/80b0b1bce0182959fbdf4518b4de9ca6dacc702b))
+
 ## [1.1.8](https://github.com/hackclub/helm/compare/midnight-core-v1.1.7...midnight-core-v1.1.8) (2025-10-23)
 
 
