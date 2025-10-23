@@ -178,7 +178,6 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.entrypoints: web
-    traefik.ingress.kubernetes.io/router.middlewares: default-gateway-middleware@kubernetescrd
 
   # Gateway middleware for routing
   gatewayMiddleware:
