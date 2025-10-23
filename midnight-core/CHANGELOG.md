@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/hackclub/helm/compare/midnight-core-v1.1.2...midnight-core-v1.1.3) (2025-10-23)
+
+
+### Bug Fixes
+
+* **midnight:** change redis env ([a6bcddf](https://github.com/hackclub/helm/commit/a6bcddf698e8289ad1694c2ee44006d3b233a70e))
+
 ## [1.1.2](https://github.com/hackclub/helm/compare/midnight-core-v1.1.1...midnight-core-v1.1.2) (2025-10-23)
 
 
