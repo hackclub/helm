@@ -27,9 +27,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "midnight-core.fullname" . }}-user-service
+                name: {{ include "midnight-core.fullname" . }}-owl-api
                 port:
-                  number: {{ .Values.userService.service.port }}
+                  number: {{ .Values.owlApi.service.port }}
           - path: /
             pathType: Prefix
             backend:
