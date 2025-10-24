@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.12](https://github.com/hackclub/helm/compare/midnight-core-v1.1.11...midnight-core-v1.1.12) (2025-10-24)
+
+
+### Bug Fixes
+
+* **midnight:** change midnight service ([c3d591e](https://github.com/hackclub/helm/commit/c3d591e9f149acf24e9a3bd121c36978f1181a70))
+
 ## [1.1.11](https://github.com/hackclub/helm/compare/midnight-core-v1.1.10...midnight-core-v1.1.11) (2025-10-24)
 
 
