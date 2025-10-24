@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.11](https://github.com/hackclub/helm/compare/midnight-core-v1.1.10...midnight-core-v1.1.11) (2025-10-24)
+
+
+### Bug Fixes
+
+* **midnight:** merge services into owl-api ([56afc3a](https://github.com/hackclub/helm/commit/56afc3a7d711dbe827cfb6783be01daf70096183))
+
 ## [1.1.10](https://github.com/hackclub/helm/compare/midnight-core-v1.1.9...midnight-core-v1.1.10) (2025-10-23)
 
 
