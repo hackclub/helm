@@ -110,18 +110,12 @@ owlApi:
     DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
     MAIL_SERVICE_DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
     ADMIN_EMAIL_WHITELIST: ""
-    SMTP_USER: ""
-    SMTP_PASS: ""
-    EMAIL_FROM: ""
-    SMIME_PRIVATE_KEY_PATH: ""
-    SMIME_CERT_PATH: ""
-    SMIME_CHAIN_PATH: ""
     REDIS_PASSWORD: "midnight"
 
   extraEnvVars: []
 
   externalConfigMapName: ""
-  externalSecretName: ""
+  externalSecretName: "midnight-secret"
 
 
 # #########################################################
