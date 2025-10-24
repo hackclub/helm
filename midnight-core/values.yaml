@@ -66,13 +66,13 @@ larkUi:
   externalSecretName: ""
 
 # #########################################################
-# user-service (User Service - NestJS API)
+# owl-api (Combined User and Mail Service - NestJS API)
 # #########################################################
-userService:
+owlApi:
   replicaCount: 1
 
   image:
-    repository: ghcr.io/hackclub/midnight/user-service
+    repository: ghcr.io/hackclub/midnight/owl-api
     pullPolicy: IfNotPresent
     tag: "latest"
 
@@ -84,7 +84,7 @@ userService:
 
   service:
     type: ClusterIP
-    port: 3002
+    port: 3000
 
   resources: {}
 
@@ -96,53 +96,9 @@ userService:
 
   env:
     NODE_ENV: "production"
-    PORT: "3002"
+    PORT: "3000"
     USER_SERVICE_PORT: "3002"
     USER_SERVICE_NODE_ENV: "production"
-    REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:26379"
-
-  secretEnv:
-    USER_SERVICE_AIRTABLE_API_KEY: ""
-    DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
-    ADMIN_EMAIL_WHITELIST: ""
-    REDIS_PASSWORD: "midnight"
-
-  extraEnvVars: []
-
-  externalConfigMapName: ""
-  externalSecretName: ""
-
-# #########################################################
-# mail-service (Mail Service - NestJS API)
-# #########################################################
-mailService:
-  replicaCount: 1
-
-  image:
-    repository: ghcr.io/hackclub/midnight/mail-service
-    pullPolicy: IfNotPresent
-    tag: "latest"
-
-  podAnnotations: {}
-
-  podSecurityContext: {}
-
-  securityContext: {}
-
-  service:
-    type: ClusterIP
-    port: 3003
-
-  resources: {}
-
-  nodeSelector: {}
-
-  tolerations: []
-
-  affinity: {}
-
-  env:
-    NODE_ENV: "production"
     MAIL_SERVICE_PORT: "3003"
     AWS_REGION: "us-east-1"
     SMTP_HOST: "email-smtp.us-east-1.amazonaws.com"
@@ -150,7 +106,10 @@ mailService:
     REDIS_URL: "redis://:${REDIS_PASSWORD}@redis-ha.redis.svc.cluster.local:26379"
 
   secretEnv:
+    USER_SERVICE_AIRTABLE_API_KEY: ""
+    DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
     MAIL_SERVICE_DATABASE_URL: "postgres://middb:midpass@postgresql-cluster-rw.postgresql.svc.cluster.local:5432/midprod"
+    ADMIN_EMAIL_WHITELIST: ""
     SMTP_USER: ""
     SMTP_PASS: ""
     EMAIL_FROM: ""

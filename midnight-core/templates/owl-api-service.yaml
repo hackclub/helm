@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "midnight-core.fullname" . }}-user-service
+  name: {{ include "midnight-core.fullname" . }}-owl-api
   labels:
     {{- include "midnight-core.labels" . | nindent 4 }}
-    role: user-service
+    role: owl-api
 spec:
-  type: {{ .Values.userService.service.type }}
+  type: {{ .Values.owlApi.service.type }}
   ports:
-    - port: {{ .Values.userService.service.port }}
+    - port: {{ .Values.owlApi.service.port }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
     {{- include "midnight-core.selectorLabels" . | nindent 4 }}
-    role: user-service
+    role: owl-api
