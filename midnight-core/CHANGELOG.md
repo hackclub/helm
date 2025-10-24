@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.13](https://github.com/hackclub/helm/compare/midnight-core-v1.1.12...midnight-core-v1.1.13) (2025-10-24)
+
+
+### Bug Fixes
+
+* **midnight:** add midnight secret ([d5235a8](https://github.com/hackclub/helm/commit/d5235a8af9d04bf29e1eb69c2d3a367a8bbf493f))
+
 ## [1.1.12](https://github.com/hackclub/helm/compare/midnight-core-v1.1.11...midnight-core-v1.1.12) (2025-10-24)
 
 
