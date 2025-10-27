@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/hackclub/helm/compare/patchbay-v1.0.2...patchbay-v1.0.3) (2025-10-27)
+
+
+### Bug Fixes
+
+* **patchbay:** change ingress to websecure ([491f335](https://github.com/hackclub/helm/commit/491f335b5f0106a15f46d72b89781deb38904518))
+
 ## [1.0.2](https://github.com/hackclub/helm/compare/patchbay-v1.0.1...patchbay-v1.0.2) (2025-10-27)
 
 
