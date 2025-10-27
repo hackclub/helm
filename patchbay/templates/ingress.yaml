@@ -1,0 +1,40 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "patchbay.fullname" . }}-ingress
+  labels:
+    {{- include "patchbay.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.domainName }}
+      secretName: {{ .Values.ingress.secretName }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.domainName }}
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "patchbay.fullname" . }}-patchbay-backend
+                port:
+                  number: {{ .Values.patchbayBackend.service.port }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "patchbay.fullname" . }}-patchbay-frontend
+                port:
+                  number: {{ .Values.patchbayFrontend.service.port }}
+{{- end }}

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "patchbay.fullname" . }}-env-patchbay-frontend
+  labels:
+    {{- include "patchbay.labels" . | nindent 4 }}
+    role: patchbay-frontend
+data:
+  {{- range $key, $value := .Values.patchbayFrontend.env }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}

@@ -1,5 +1,6 @@
 {
     "flavor-adventure": "1.1.1",
     "minight-core": "0.0.0",
-    "midnight-core": "1.1.13"
+    "midnight-core": "1.1.13",
+    "patchbay": "0.0.0"
 }

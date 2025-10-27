@@ -7,6 +7,10 @@
       "midnight-core": {
         "package-name": "midnight-core",
         "release-type": "helm"
+      },
+      "patchbay": {
+        "package-name": "patchbay",
+        "release-type": "helm"
       }
     },
     "separate-pull-requests": true

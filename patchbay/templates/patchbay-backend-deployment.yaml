@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "patchbay.fullname" . }}-patchbay-backend
+  labels:
+    {{- include "patchbay.labels" . | nindent 4 }}
+    role: patchbay-backend
+spec:
+  replicas: {{ .Values.patchbayBackend.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "patchbay.selectorLabels" . | nindent 6 }}
+      role: patchbay-backend
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ (include (print $.Template.BasePath "/patchbay-backend-env.yaml") .) | sha256sum }}
+        checksum/secret: {{ (include (print $.Template.BasePath "/patchbay-backend-secret-env.yaml") .) | sha256sum }}
+        {{- if .Values.forceRedeploy }}
+        forceRedeploy: {{ randAlphaNum 10 | quote }}
+        {{- end }}
+        {{- with .Values.patchbayBackend.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "patchbay.selectorLabels" . | nindent 8 }}
+        role: patchbay-backend
+    spec:
+      {{- if or .Values.imageCredentials.enabled .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- if .Values.imageCredentials.enabled }}
+        - name: {{ include "patchbay.fullname" . }}-pull-secret
+        {{- end }}
+        {{- with .Values.imagePullSecrets }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+      serviceAccountName: {{ include "patchbay.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.patchbayBackend.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-patchbay-backend
+          securityContext:
+            {{- toYaml .Values.patchbayBackend.securityContext | nindent 12 }}
+          image: "{{ .Values.patchbayBackend.image.repository }}:{{ .Values.patchbayBackend.image.tag | default .Values.appVersion }}"
+          imagePullPolicy: {{ .Values.patchbayBackend.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "patchbay.fullname" . }}-env-patchbay-backend
+            - secretRef:
+                name: {{ include "patchbay.fullname" . }}-secret-env-patchbay-backend
+            {{- if .Values.patchbayBackend.externalConfigMapName }}
+            - configMapRef:
+                name: {{ .Values.patchbayBackend.externalConfigMapName }}
+            {{- end }}
+            {{- if .Values.patchbayBackend.externalSecretName }}
+            - secretRef:
+                name: {{ .Values.patchbayBackend.externalSecretName }}
+            {{- end }}
+          {{- if .Values.patchbayBackend.extraEnvVars }}
+          env:
+            {{- include "common.tplvalues.render" (dict "value" .Values.patchbayBackend.extraEnvVars "context" $) | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.patchbayBackend.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.patchbayBackend.resources | nindent 12 }}
+      {{- with .Values.patchbayBackend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.patchbayBackend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.patchbayBackend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

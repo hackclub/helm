@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "patchbay.fullname" . }}-patchbay-frontend
+  labels:
+    {{- include "patchbay.labels" . | nindent 4 }}
+    role: patchbay-frontend
+spec:
+  type: {{ .Values.patchbayFrontend.service.type }}
+  ports:
+    - port: {{ .Values.patchbayFrontend.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "patchbay.selectorLabels" . | nindent 4 }}
+    role: patchbay-frontend
