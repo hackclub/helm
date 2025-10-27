@@ -39,7 +39,7 @@ patchbayBackend:
 
   service:
     type: ClusterIP
-    port: 3000
+    port: 8080
 
   resources: {}
 
@@ -51,7 +51,7 @@ patchbayBackend:
 
   env:
     NODE_ENV: "production"
-    PORT: "3000"
+    PORT: "8080"
 
   secretEnv: {}
 
