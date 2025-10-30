@@ -23,7 +23,7 @@ spec:
     - host: {{ .Values.domainName }}
       http:
         paths:
-          - path: /api/user
+          - path: /api
             pathType: Prefix
             backend:
               service:
