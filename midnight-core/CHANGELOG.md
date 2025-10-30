@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.14](https://github.com/hackclub/helm/compare/midnight-core-v1.1.13...midnight-core-v1.1.14) (2025-10-30)
+
+
+### Bug Fixes
+
+* **midnight:** change ingress api path ([1156e9f](https://github.com/hackclub/helm/commit/1156e9f2d20fbeba5b6b138e95db7cd432eaaf87))
+
 ## [1.1.13](https://github.com/hackclub/helm/compare/midnight-core-v1.1.12...midnight-core-v1.1.13) (2025-10-24)
 
 
