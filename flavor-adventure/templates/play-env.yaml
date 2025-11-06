@@ -9,7 +9,9 @@ data:
   API_URL: {{ range $replica, $f := until (int .Values.back.replicaCount) }}{{ include "workadventure.fullname" $ }}-back-{{ $replica }}:50051{{ if ne $replica (sub (int $.Values.back.replicaCount) 1)  }}{{ "," }}{{ end }}{{ end }}
   ICON_URL: {{ include "workadventure.iconUrl" . | quote }}
   UPLOADER_URL: {{ include "workadventure.uploaderUrl" . | quote }}
+  {{- if and (not (hasKey .Values.commonEnv "PUSHER_URL")) (not (hasKey .Values.play.env "PUSHER_URL")) }}
   PUSHER_URL: {{ include "workadventure.pusherUrl" . | quote }}
+  {{- end }}
   FRONT_URL: {{ include "workadventure.playUrl" . | quote }}
   # The PUBLIC_MAP_STORAGE_URL is only used when no admin is connected
   PUBLIC_MAP_STORAGE_URL: {{ include "workadventure.mapStorageUrl" . | quote }}
