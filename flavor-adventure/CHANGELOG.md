@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/hackclub/helm/compare/flavor-adventure-v1.1.1...flavor-adventure-v1.1.2) (2025-11-06)
+
+
+### Bug Fixes
+
+* **flavor:** update pusher env ([f04691f](https://github.com/hackclub/helm/commit/f04691f45af9886615577dad7ed09dbf2bc74e66))
+
 ## [1.1.1](https://github.com/hackclub/helm/compare/flavor-adventure-v1.1.0...flavor-adventure-v1.1.1) (2025-10-23)
 
 
