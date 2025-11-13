@@ -65,10 +65,6 @@ spec:
             - name: http
               containerPort: {{ .Values.owlApi.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /api/healthcheck
-              port: http
           readinessProbe:
             httpGet:
               path: /api/healthcheck
