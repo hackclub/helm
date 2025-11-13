@@ -65,6 +65,14 @@ spec:
             - name: http
               containerPort: {{ .Values.owlApi.service.port }}
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api/healthcheck
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /api/healthcheck
+              port: http
           resources:
             {{- toYaml .Values.owlApi.resources | nindent 12 }}
       {{- with .Values.owlApi.nodeSelector }}
