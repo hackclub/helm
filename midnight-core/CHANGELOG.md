@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.17](https://github.com/hackclub/helm/compare/midnight-core-v1.1.16...midnight-core-v1.1.17) (2025-11-13)
+
+
+### Bug Fixes
+
+* **midnight:** update readiness probe ([ce17805](https://github.com/hackclub/helm/commit/ce1780543ab350063109a29bcbc5fcb2cadc5772))
+
 ## [1.1.16](https://github.com/hackclub/helm/compare/midnight-core-v1.1.15...midnight-core-v1.1.16) (2025-11-13)
 
 
