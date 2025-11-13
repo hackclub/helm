@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.15](https://github.com/hackclub/helm/compare/midnight-core-v1.1.14...midnight-core-v1.1.15) (2025-11-13)
+
+
+### Bug Fixes
+
+* add health checks for owl api ([6f5d1c7](https://github.com/hackclub/helm/commit/6f5d1c75a76d798c2fc0545547886d7f77805af9))
+
 ## [1.1.14](https://github.com/hackclub/helm/compare/midnight-core-v1.1.13...midnight-core-v1.1.14) (2025-10-30)
 
 
