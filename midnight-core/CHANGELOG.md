@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.16](https://github.com/hackclub/helm/compare/midnight-core-v1.1.15...midnight-core-v1.1.16) (2025-11-13)
+
+
+### Bug Fixes
+
+* remove midnight live probe ([553fa01](https://github.com/hackclub/helm/commit/553fa0192847d0e7fc770b57e19e9684580df1bc))
+
 ## [1.1.15](https://github.com/hackclub/helm/compare/midnight-core-v1.1.14...midnight-core-v1.1.15) (2025-11-13)
 
 

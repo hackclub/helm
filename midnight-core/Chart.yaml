@@ -4,7 +4,7 @@ description: Run midnight-core on Kubernetes
 
 type: application
 
-version: 1.1.15
+version: 1.1.16
 
 appVersion: "3.8"
 
