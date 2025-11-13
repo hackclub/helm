@@ -69,6 +69,7 @@ spec:
             httpGet:
               path: /api/healthcheck
               port: http
+            failureThreshold: 20
           resources:
             {{- toYaml .Values.owlApi.resources | nindent 12 }}
       {{- with .Values.owlApi.nodeSelector }}
